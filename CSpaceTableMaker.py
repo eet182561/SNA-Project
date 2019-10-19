@@ -1,12 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import networkx as nx
 
 loc = 'BasicTablemod.csv'
 
 df = pd.read_csv(loc)
 BusStops = list(set(list(df['Source'])))
 Routes = list(set(list(df['RouteNumber'])))
+Routes_ar = np.array(Routes)
 
 BusStopsDict = {}
 for bs in BusStops:
@@ -37,3 +39,18 @@ plt.ylabel('Number of routes')
 
 # Uncomment following line to Write image file to Disk
 # plt.savefig('CSpaceHist')
+
+pos_c = {}
+C_G = {}
+for n in range(10,56):
+    plt.close()
+    c_n_routes = np.where(C_max >= n)[0]
+    c_n_df = df.loc[df['RouteNumber'].isin(np.take(Routes_ar,c_n_routes))]
+
+    temp = np.array(c_n_df[['Source', 'Target']])
+    C_G[n] = nx.Graph()
+    C_G[n].add_edges_from(temp)
+    pos_c[n] = nx.spring_layout(C_G[n], iterations=50)
+    nx.draw_networkx(C_G[n], pos=pos_c[n], node_size=10, with_labels=False)
+    plt.savefig("C"+str(n))
+    c_n_df.to_csv('C'+str(n)+".csv")
