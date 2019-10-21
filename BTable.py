@@ -37,3 +37,14 @@ for bs1 in BusStopsDict:
         BBase[bus_index[bs1],bus_index[bs2]] = 1*(len(BusStopsDict[bs1].intersection(BusStopsDict[bs2])) >= 1)
 
 dfm = pd.DataFrame(BBase)
+
+Pgraph = nx.Graph()
+Pgraph = nx.from_numpy_matrix(BBase)
+fwnp = nx.floyd_warshall_numpy(Pgraph)
+#dia = nx.diameter(Pgraph)
+#assert (dia == max(fwnp))
+
+#plt.hist(np.flatten(fwnp))
+dict_fwnp ={1:0,2:0,3:0,4:0}
+for n in fwnp.flatten().astype(int):
+    dict_fwnp[n] = dict_fwnp[n]+1
