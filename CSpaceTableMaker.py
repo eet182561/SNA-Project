@@ -3,6 +3,25 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 
+
+def make_and_save_graphs(c_max, routes_ar, dataframe):
+    c_g = {}
+    pos_c = {}
+    c_n_df = {}
+    for n in range(10, 56):
+        plt.close()
+        c_n_routes = np.where(c_max >= n)[0]
+        c_n_df[n] = dataframe.loc[dataframe['RouteNumber'].isin(np.take(routes_ar, c_n_routes))]
+        temp = np.array(c_n_df[n][['Source', 'Target']])
+        c_g[n] = nx.Graph()
+        c_g[n].add_edges_from(temp)
+        #pos_c[n] = nx.spring_layout(c_g[n], iterations=50)
+        #nx.draw_networkx(c_g[n], pos=pos_c[n], node_size=10, with_labels=False)
+        #plt.savefig("C" + str(n))
+        #c_n_df[n].to_csv('C' + str(n) + ".csv")
+    return c_n_df
+
+
 loc = 'BasicTablemod.csv'
 
 df = pd.read_csv(loc)
@@ -33,24 +52,12 @@ CBase = np.multiply(CBase, 1 - np.eye((len(Routes))))
 
 # Plot Hist
 C_max = np.max(CBase, axis=1)
-[n, bins, drop] = plt.hist(C_max, 25)
+[h, bins, drop] = plt.hist(C_max, 25)
 plt.xlabel('Number of Common Bust Stops')
 plt.ylabel('Number of routes')
 
 # Uncomment following line to Write image file to Disk
 # plt.savefig('CSpaceHist')
 
-pos_c = {}
-C_G = {}
-for n in range(10,56):
-    plt.close()
-    c_n_routes = np.where(C_max >= n)[0]
-    c_n_df = df.loc[df['RouteNumber'].isin(np.take(Routes_ar,c_n_routes))]
 
-    temp = np.array(c_n_df[['Source', 'Target']])
-    C_G[n] = nx.Graph()
-    C_G[n].add_edges_from(temp)
-    pos_c[n] = nx.spring_layout(C_G[n], iterations=50)
-    nx.draw_networkx(C_G[n], pos=pos_c[n], node_size=10, with_labels=False)
-    plt.savefig("C"+str(n))
-    c_n_df.to_csv('C'+str(n)+".csv")
+c_space_dict = make_and_save_graphs(C_max, Routes_ar, df)
