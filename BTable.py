@@ -43,8 +43,18 @@ Pgraph = nx.from_numpy_matrix(BBase)
 fwnp = nx.floyd_warshall_numpy(Pgraph)
 #dia = nx.diameter(Pgraph)
 #assert (dia == max(fwnp))
+plt.hist(fwnp.flatten().astype(int))
+dict_fwnp ={0:0,1:0,2:0,3:0,4:0}
+for m in range(0,len(BusStops)):
+    for n in range(0,len(BusStops)):
+        dict_fwnp[fwnp[m,n]] = dict_fwnp[fwnp[m,n]]+1
 
-#plt.hist(np.flatten(fwnp))
-dict_fwnp ={1:0,2:0,3:0,4:0}
-for n in fwnp.flatten().astype(int):
-    dict_fwnp[n] = dict_fwnp[n]+1
+fwnp_bar = [dict_fwnp[1]/2,dict_fwnp[2]/2,dict_fwnp[3]/2,dict_fwnp[4]/2]
+label = ["1","2","3","4"]
+index = np.arange(len(label))
+plt.bar(index, fwnp_bar)
+plt.xlabel('Shortest Distance', fontsize=5)
+plt.ylabel('No of Pairs having that distance', fontsize=5)
+plt.xticks(index, label, fontsize=10, rotation=0)
+plt.title('Route changes to reach from one city to another')
+plt.show()
