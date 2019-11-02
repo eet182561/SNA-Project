@@ -2,6 +2,9 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 
+import xlrd
+
+
 loc = 'SimulationTable.csv'
 
 
@@ -14,6 +17,23 @@ def eff(nxg):
         for j in range(i + 1, n):
             sum += dist_mat[i][j]
     return sum / (n * (n - 1))
+
+def DeleteEdge():
+    loc = ("E:\Sem-3\SNA\Project\\SimulationTable.xlsx")
+    sheet = wb.sheet_by_index(0)
+    print(sheet.cell_value(0, 0))
+
+
+    #Read SimulationTable
+    #Run for all nodes
+     #     Select one node
+      #      delete it from table
+       #     form a adjacency matrix
+        #    Efficency computation
+
+    for i = 1 to NoOfEdges   # We will not consider boundary nodes and nodes having degree more than 2
+
+
 
 
 def read_data(filename):
