@@ -2,19 +2,33 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 
-loc = 'SimulationTable.csv'
+loc = 'BasicTablemod.csv'
 
 
 def eff(nxg):
     # nxg is a network x graph
     n = len(nxg)
     dist_mat = nx.floyd_warshall_numpy(nxg)
+    sum = 0.0
+    for i in range(0, n):
+        for j in range(i + 1, n):
+            sum = sum+ (1/dist_mat[i,j])
+    return sum / (n * (n - 1))
+
+def transiteff(network_array):
+    #network array is a numpy array
+    n,n = network_array.shape
+    #dist_mat = nx.floyd_warshall_numpy(nxg)
     sum = 0
     for i in range(0, n):
         for j in range(i + 1, n):
-            sum += dist_mat[i][j]
+            sum += network_array[i][j]
     return sum / (n * (n - 1))
 
+def df_to_adjmat(df):
+    BusStops = list(set(list(df['Source'])))
+    Routes = list(set(list(df['RouteNumber'])))
+    BBase = np.zeros((len(BusStops), len(BusStops)))
 
 def read_data(filename):
     df = pd.read_csv(filename)
@@ -52,9 +66,17 @@ def read_data(filename):
 
 # BBase matrix used for detecting presence of node
 # PTNadjmat is randomly generated weight matrix for the network
-PTNadjmat = np.random.random_sample(BBase.shape) * 10
+
+BRD,BSD,BS,R,BB = read_data(loc)
+Pgraph = nx.Graph()
+Pgraph = nx.from_numpy_matrix(BB)
+print(eff(Pgraph))
+#Assigning random weights to the graph
+PTNadjmat = np.random.random_sample(BB.shape) * 10
 np.fill_diagonal(PTNadjmat, 0)
 
-Pgraph = nx.Graph()
-Pgraph = nx.from_numpy_matrix(BBase)
-fwnp = nx.floyd_warshall_numpy(Pgraph)
+PTNadjmat = np.multiply(PTNadjmat,BB)
+
+
+
+
