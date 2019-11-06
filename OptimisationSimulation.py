@@ -2,7 +2,14 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 
+<<<<<<< HEAD
 loc = 'BasicTablemod.csv'
+=======
+import xlrd
+
+
+loc = 'SimulationTable.csv'
+>>>>>>> eed0393afc0e6d896c49b2682c698d636b5f340f
 
 
 def eff(nxg):
@@ -25,10 +32,30 @@ def transiteff(network_array):
             sum += network_array[i][j]
     return sum / (n * (n - 1))
 
+<<<<<<< HEAD
 def df_to_adjmat(df):
     BusStops = list(set(list(df['Source'])))
     Routes = list(set(list(df['RouteNumber'])))
     BBase = np.zeros((len(BusStops), len(BusStops)))
+=======
+def DeleteEdge():
+    loc = ("E:\Sem-3\SNA\Project\\SimulationTable.xlsx")
+    sheet = wb.sheet_by_index(0)
+    print(sheet.cell_value(0, 0))
+
+
+    #Read SimulationTable
+    #Run for all nodes
+     #     Select one node
+      #      delete it from table
+       #     form a adjacency matrix
+        #    Efficency computation
+
+    for i = 1 to NoOfEdges   # We will not consider boundary nodes and nodes having degree more than 2
+
+
+
+>>>>>>> eed0393afc0e6d896c49b2682c698d636b5f340f
 
 def read_data(filename):
     df = pd.read_csv(filename)

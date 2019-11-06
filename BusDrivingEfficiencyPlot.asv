@@ -1,0 +1,8 @@
+x = 0:0.001:1;
+W = 0:1/100:10;
+plot(x,W,'ro');
+title('Relation between Bus Driving Efficiency and Passenger Flow')
+xlabel('Passenger Flow');
+ylabel('Bus Driving Efficiency');
+
+W = x/(1
