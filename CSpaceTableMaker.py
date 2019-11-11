@@ -8,16 +8,21 @@ def make_and_save_graphs(c_max, routes_ar, dataframe):
     c_g = {}
     pos_c = {}
     c_n_df = {}
-    for n in range(10, 56):
+    #Set the lower range and upper range of C space you want
+    lower = 10
+    upper = 56
+    for n in range(lower, upper):
         plt.close()
         c_n_routes = np.where(c_max >= n)[0]
         c_n_df[n] = dataframe.loc[dataframe['RouteNumber'].isin(np.take(routes_ar, c_n_routes))]
         temp = np.array(c_n_df[n][['Source', 'Target']])
         c_g[n] = nx.Graph()
         c_g[n].add_edges_from(temp)
+        #Uncomment the following lines to plot the graphs and save them
         #pos_c[n] = nx.spring_layout(c_g[n], iterations=50)
         #nx.draw_networkx(c_g[n], pos=pos_c[n], node_size=10, with_labels=False)
         #plt.savefig("C" + str(n))
+        #Uncomment the following line to save the tables
         #c_n_df[n].to_csv('C' + str(n) + ".csv")
     return c_n_df
 
