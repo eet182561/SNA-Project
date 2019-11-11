@@ -1,10 +1,15 @@
 # SNA-Project
-Bust Route Analysis using social networking techniques. This readme consist of how to run various code files and description of major functions.
-
+Bust Route Analysis using social networking techniques. This readme consist of how to run various code files and description of major functions. Out Project uses python3 for data processing and Gephi and Google Earth for visualization.
+Requirements:
+For Python install the packages in req.txt. These can be installed also using pip install 
+```bash
+pip install -r req.txt
+```
+For Gephi we have used "Event Graph Layout" plugin. 
 
 ## Data collection
 The [AUTODOWNLOAD.ipyb](https://github.com/eet182561/SNA-Project/blob/master/AUTODOWNLOAD.ipynb/) file contains step by step instruction how we downloaded the data from various websites.
-This file generates a csv file containing route information and geographical cordinates. We use this file to extract L1 space.
+This file generates a csv file, [Basicmodtable.csv](https://github.com/eet182561/SNA-Project/blob/master/BasicTablemod.csv) containing route information and geographical cordinates. We use this file to extract L1 space.
 ### Format of the output file
 The output csv file must have the following coulumn heading necessary for further processing. We have called the output table as [Basicmodtable.csv](https://github.com/eet182561/SNA-Project/blob/master/BasicTablemod.csv).It must have "RouteNumber","Source","Destination" (all without quotes)columns required for further processing by other script files.
 ## Formation of different Spaces
